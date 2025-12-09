@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Beaker, FlaskConical, BookOpen, Atom, X, TestTube2, ArrowRight, Sword, Shield, CheckCircle2, Lightbulb, Zap, HelpCircle, Skull } from 'lucide-react';
 import { CardComponent } from './components/Card';
@@ -711,13 +712,13 @@ export default function App() {
                    {unselectedCards.map((card, i) => {
                      // Recalculate generic index for visual balance
                      const offset = i - (unselectedCards.length - 1) / 2;
-                     const rotation = offset * 3;
-                     const xTrans = offset * 40; 
+                     const rotation = offset * 4; // Slightly more rotation to see headers
+                     const xTrans = offset * 85; // Increased spacing (was 40)
 
                      return (
                        <div 
                          key={card.id}
-                         className="absolute transition-all duration-300 origin-bottom hover:z-50 hover:scale-110"
+                         className="absolute transition-all duration-300 origin-bottom hover:z-50 hover:scale-110 hover:-translate-y-6"
                          style={{
                            zIndex: i,
                            transform: `translateX(${xTrans}px) rotate(${rotation}deg)`,
