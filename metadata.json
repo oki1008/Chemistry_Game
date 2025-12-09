@@ -1,5 +1,5 @@
 {
-  "name": "Elemental Synth",
-  "description": "A chemistry-based battle card game where players synthesize molecules from elements to defeat their opponent. Learn inorganic chemistry concepts while battling!",
+  "name": "無機化学カードバトル！",
+  "description": "元素を組み合わせて分子を作り、対戦する化学カードゲーム。高校化学の知識を使ってバトルしよう！",
   "requestFramePermissions": []
 }

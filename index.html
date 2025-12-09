@@ -1,37 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Elemental Synth</title>
+    <title>Elemental Synth - 化学バトル</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;500&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Fredoka:wght@400;600&display=swap');
+      
       body {
-        font-family: 'Roboto Mono', monospace;
-        background-color: #0f172a;
-        color: #e2e8f0;
+        font-family: 'M PLUS Rounded 1c', sans-serif;
+        background: #f0f4f8; /* Soft background to let pop colors shine */
+        background-image: radial-gradient(#e0e7ff 2px, transparent 2px);
+        background-size: 24px 24px;
+        color: #333;
+        overflow: hidden;
+        user-select: none;
       }
       .font-display {
-        font-family: 'Orbitron', sans-serif;
+        font-family: 'Fredoka', sans-serif;
       }
+      
       /* Custom Scrollbar */
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #1e293b; 
+        background: rgba(0,0,0,0.05); 
+        border-radius: 4px;
       }
       ::-webkit-scrollbar-thumb {
-        background: #475569; 
+        background: rgba(100,100,100,0.2); 
         border-radius: 4px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #64748b; 
+        background: rgba(100,100,100,0.4); 
       }
-      .card-glow:hover {
-        box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+
+      .pop-shadow {
+        box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.15);
+      }
+      
+      .pop-border {
+        border: 3px solid rgba(255,255,255,0.5);
+      }
+
+      /* --- Animations --- */
+
+      /* Pop In */
+      @keyframes pop-in {
+        0% { transform: scale(0.5) translateY(20px); opacity: 0; }
+        60% { transform: scale(1.1); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      .animate-pop {
+        animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      }
+
+      /* Float */
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+      }
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* Screen Shake */
+      @keyframes shake {
+        0% { transform: translate(1px, 1px) rotate(0deg); }
+        10% { transform: translate(-1px, -2px) rotate(-1deg); }
+        20% { transform: translate(-3px, 0px) rotate(1deg); }
+        30% { transform: translate(3px, 2px) rotate(0deg); }
+        40% { transform: translate(1px, -1px) rotate(1deg); }
+        50% { transform: translate(-1px, 2px) rotate(-1deg); }
+        60% { transform: translate(-3px, 1px) rotate(0deg); }
+        70% { transform: translate(3px, 1px) rotate(-1deg); }
+        80% { transform: translate(-1px, -1px) rotate(1deg); }
+        90% { transform: translate(1px, 2px) rotate(0deg); }
+        100% { transform: translate(1px, -2px) rotate(-1deg); }
+      }
+      .animate-shake {
+        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+      }
+
+      /* Damage Number Float */
+      @keyframes damage-float {
+        0% { opacity: 0; transform: translateY(0) scale(0.5); }
+        20% { opacity: 1; transform: translateY(-20px) scale(1.5); }
+        80% { opacity: 1; transform: translateY(-40px) scale(1); }
+        100% { opacity: 0; transform: translateY(-60px) scale(0.8); }
+      }
+      .animate-damage {
+        animation: damage-float 1.5s ease-out forwards;
+      }
+
+      /* Cut-in Speed Lines */
+      @keyframes speed-lines {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 100% 100%; }
+      }
+      .bg-speed-lines {
+        background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 10px,
+          rgba(255, 255, 255, 0.1) 10px,
+          rgba(255, 255, 255, 0.1) 20px
+        );
+        background-size: 200% 200%;
+        animation: speed-lines 0.5s linear infinite;
+      }
+
+      /* Slide In Text */
+      @keyframes slide-in-text {
+        0% { transform: translateX(-100%) skewX(-10deg); opacity: 0; }
+        50% { transform: translateX(0) skewX(-10deg); opacity: 1; }
+        100% { transform: translateX(100%) skewX(-10deg); opacity: 0; }
+      }
+      .animate-slide-text {
+        animation: slide-in-text 2s ease-in-out forwards;
+      }
+
+      /* Victory Animations */
+      @keyframes victory-bg {
+        0% { opacity: 0; transform: scale(0); }
+        50% { opacity: 1; transform: scale(1.5); }
+        100% { opacity: 0; transform: scale(2); }
+      }
+      .animate-victory-burst {
+        animation: victory-bg 1s ease-out forwards;
+      }
+
+      @keyframes victory-text {
+        0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+        60% { transform: scale(1.2) rotate(5deg); opacity: 1; }
+        80% { transform: scale(0.9) rotate(-2deg); }
+        100% { transform: scale(1) rotate(0deg); opacity: 1; }
+      }
+      .animate-victory-text {
+        animation: victory-text 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      }
+
+      /* Defeat Animations */
+      @keyframes defeat-bg {
+        0% { opacity: 0; background-color: rgba(0,0,0,0); }
+        100% { opacity: 1; background-color: rgba(0,0,0,0.85); }
+      }
+      .animate-defeat-bg {
+        animation: defeat-bg 1.5s ease-out forwards;
+      }
+
+      @keyframes defeat-text {
+        0% { transform: scale(1.5) translateY(-20px); opacity: 0; filter: blur(10px); }
+        100% { transform: scale(1) translateY(0); opacity: 1; filter: blur(0px); }
+      }
+      .animate-defeat-text {
+        animation: defeat-text 2s ease-out forwards;
       }
     </style>
   <script type="importmap">

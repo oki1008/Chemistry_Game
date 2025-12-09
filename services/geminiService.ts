@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import { LogEntry, ReactionRecipe } from "../types";
+import { ReactionRecipe } from "../types";
 
 let ai: GoogleGenAI | null = null;
 
@@ -14,15 +14,13 @@ export const getChemistryCommentary = async (
   if (!ai) return recipe.explanation;
 
   try {
-    // We use generateContent for text answers
     const prompt = `
-      You are a passionate chemistry professor narrating a card game battle.
-      The player just performed this reaction: ${recipe.explanation}.
-      Result: ${recipe.result.name} (${recipe.result.formula}).
+      あなたは熱血な化学の先生です。カードゲームの実況をしています。
+      プレイヤーが以下の化学反応を成功させました: ${recipe.explanation}
+      生成物: ${recipe.result.name} (${recipe.result.formula}).
       
-      Give a short, exciting, 1-sentence commentary suitable for a high school student.
-      Mention a real-world application or a quirky fact about the substance.
-      Keep it under 30 words.
+      高校生に向けて、この物質に関する豆知識や実社会での用途を、
+      短く（30文字以内）、ワクワクするような日本語でコメントしてください。
     `;
 
     const response = await ai.models.generateContent({
@@ -44,9 +42,10 @@ export const getAIActionComment = async (
 
   try {
     const prompt = `
-      You are an AI opponent in a chemistry battle game.
-      You just performed this action: ${actionDescription}.
-      Give a short, witty taunt or scientific remark (max 10 words).
+      あなたは化学カードゲームの対戦相手（AI）です。
+      あなたはこの行動をとりました: ${actionDescription}.
+      
+      対戦相手（プレイヤー）に対して、少し生意気だけど知的なセリフを日本語で一つ言ってください（20文字以内）。
     `;
     
     const response = await ai.models.generateContent({

@@ -1,3 +1,4 @@
+
 export enum ElementType {
   H = 'H',
   C = 'C',
@@ -34,7 +35,7 @@ export interface Card {
   category: CardCategory;
   element?: ElementType;
   condition?: ConditionType;
-  cost: number;
+  // Cost removed for simplicity
   description: string;
   color: string;
 }
@@ -72,10 +73,9 @@ export interface ReactionRecipe {
 export interface PlayerState {
   hp: number;
   maxHp: number;
-  mana: number;
-  maxMana: number;
+  // Mana removed
   hand: Card[];
-  fieldElements: Card[]; // Elements currently in the "beaker"
+  // fieldElements removed (Direct synthesis from hand)
   molecules: Molecule[]; // Synthesized active units
   poisonCounters: number;
   isStunned: boolean;

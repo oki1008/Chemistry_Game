@@ -1,131 +1,116 @@
+
 import { Card, CardCategory, ConditionType, ElementType, ReactionRecipe, MoleculeType } from './types';
 
 // Helper to generate unique IDs
 export const generateId = () => Math.random().toString(36).substr(2, 9);
 
+// Updated colors for POP design
+// Removed 'cost' property
 export const ELEMENT_DECK: Omit<Card, 'id'>[] = [
-  { name: 'Hydrogen', category: CardCategory.ELEMENT, element: ElementType.H, cost: 1, description: 'Basic building block. Highly reactive.', color: 'bg-blue-500' },
-  { name: 'Hydrogen', category: CardCategory.ELEMENT, element: ElementType.H, cost: 1, description: 'Basic building block. Highly reactive.', color: 'bg-blue-500' },
-  { name: 'Hydrogen', category: CardCategory.ELEMENT, element: ElementType.H, cost: 1, description: 'Basic building block. Highly reactive.', color: 'bg-blue-500' },
-  { name: 'Hydrogen', category: CardCategory.ELEMENT, element: ElementType.H, cost: 1, description: 'Basic building block. Highly reactive.', color: 'bg-blue-500' },
-  { name: 'Oxygen', category: CardCategory.ELEMENT, element: ElementType.O, cost: 1, description: 'Necessary for combustion and oxidation.', color: 'bg-red-500' },
-  { name: 'Oxygen', category: CardCategory.ELEMENT, element: ElementType.O, cost: 1, description: 'Necessary for combustion and oxidation.', color: 'bg-red-500' },
-  { name: 'Nitrogen', category: CardCategory.ELEMENT, element: ElementType.N, cost: 1, description: 'Inert gas, but powerful in compounds.', color: 'bg-purple-500' },
-  { name: 'Chlorine', category: CardCategory.ELEMENT, element: ElementType.Cl, cost: 2, description: 'Toxic halogen.', color: 'bg-green-600' },
-  { name: 'Sulfur', category: CardCategory.ELEMENT, element: ElementType.S, cost: 2, description: 'Yellow solid. Source of sulfates.', color: 'bg-yellow-500' },
-  { name: 'Sodium', category: CardCategory.ELEMENT, element: ElementType.Na, cost: 2, description: 'Alkali metal. Reacts violently with water.', color: 'bg-orange-400' },
-  { name: 'Silver', category: CardCategory.ELEMENT, element: ElementType.Ag, cost: 3, description: 'Transition metal. Forms precipitates.', color: 'bg-gray-400' },
-  { name: 'Iron', category: CardCategory.ELEMENT, element: ElementType.Fe, cost: 2, description: 'Industrial metal. Catalyst capability.', color: 'bg-slate-500' },
-  { name: 'Copper', category: CardCategory.ELEMENT, element: ElementType.Cu, cost: 2, description: 'Reddish metal.', color: 'bg-orange-600' },
+  { name: '水素', category: CardCategory.ELEMENT, element: ElementType.H, description: '基本の元素。まずはこれを集めよう。', color: 'bg-cyan-300 border-cyan-500 text-cyan-900' },
+  { name: '水素', category: CardCategory.ELEMENT, element: ElementType.H, description: '基本の元素。まずはこれを集めよう。', color: 'bg-cyan-300 border-cyan-500 text-cyan-900' },
+  { name: '水素', category: CardCategory.ELEMENT, element: ElementType.H, description: '基本の元素。まずはこれを集めよう。', color: 'bg-cyan-300 border-cyan-500 text-cyan-900' },
+  { name: '水素', category: CardCategory.ELEMENT, element: ElementType.H, description: '基本の元素。まずはこれを集めよう。', color: 'bg-cyan-300 border-cyan-500 text-cyan-900' },
+  { name: '酸素', category: CardCategory.ELEMENT, element: ElementType.O, description: '燃やすのに必要。', color: 'bg-rose-300 border-rose-500 text-rose-900' },
+  { name: '酸素', category: CardCategory.ELEMENT, element: ElementType.O, description: '燃やすのに必要。', color: 'bg-rose-300 border-rose-500 text-rose-900' },
+  { name: '窒素', category: CardCategory.ELEMENT, element: ElementType.N, description: '空気の主成分。', color: 'bg-violet-300 border-violet-500 text-violet-900' },
+  { name: '塩素', category: CardCategory.ELEMENT, element: ElementType.Cl, description: '刺激臭のある気体。', color: 'bg-lime-300 border-lime-500 text-lime-900' },
+  { name: '硫黄', category: CardCategory.ELEMENT, element: ElementType.S, description: '火山の近くにある黄色い石。', color: 'bg-yellow-300 border-yellow-500 text-yellow-900' },
+  { name: 'ナトリウム', category: CardCategory.ELEMENT, element: ElementType.Na, description: '水に入れると爆発する金属。', color: 'bg-orange-300 border-orange-500 text-orange-900' },
+  { name: '銀', category: CardCategory.ELEMENT, element: ElementType.Ag, description: 'キラキラした貴金属。', color: 'bg-slate-300 border-slate-500 text-slate-800' },
+  { name: '鉄', category: CardCategory.ELEMENT, element: ElementType.Fe, description: '頑丈な金属。', color: 'bg-stone-400 border-stone-600 text-stone-900' },
 ];
 
 export const CONDITION_DECK: Omit<Card, 'id'>[] = [
-  { name: 'Burner (Heat)', category: CardCategory.CONDITION, condition: ConditionType.HEAT, cost: 1, description: 'Provides activation energy (Δ).', color: 'bg-red-700' },
-  { name: 'Spark', category: CardCategory.CONDITION, condition: ConditionType.SPARK, cost: 1, description: 'Ignites explosive mixtures.', color: 'bg-yellow-300' },
-  { name: 'Water (Solvent)', category: CardCategory.CONDITION, condition: ConditionType.WATER, cost: 0, description: 'Universal solvent for reactions.', color: 'bg-blue-400' },
-  { name: 'Fe Catalyst', category: CardCategory.CONDITION, condition: ConditionType.CATALYST_FE, cost: 2, description: 'Catalyst for Haber-Bosch process.', color: 'bg-slate-600' },
+  { name: '加熱', category: CardCategory.CONDITION, condition: ConditionType.HEAT, description: '温めて反応させる。', color: 'bg-red-500 border-red-700 text-white' },
+  { name: '点火', category: CardCategory.CONDITION, condition: ConditionType.SPARK, description: 'バチッ！と火をつける。', color: 'bg-yellow-400 border-yellow-600 text-yellow-900' },
+  { name: '水 (溶媒)', category: CardCategory.CONDITION, condition: ConditionType.WATER, description: '水に溶かす。', color: 'bg-blue-400 border-blue-600 text-white' },
 ];
 
-export const STARTING_HAND_SIZE = 5;
-export const MAX_MANA = 5;
+export const STARTING_HAND_SIZE = 6; // Increased hand size for easier combos
 
 // Recipe Database
-// Logic will sort inputs alphabetically to match
 export const RECIPES: ReactionRecipe[] = [
   // 2 H2 + O2 -> 2 H2O (Explosive synthesis if Spark used)
   {
     inputs: [ElementType.H, ElementType.H, ElementType.O],
     condition: ConditionType.SPARK,
     result: {
-      name: 'Water Vapor Explosion',
-      formula: 'H2O',
+      name: '水蒸気爆発',
+      formula: 'H₂O',
       type: MoleculeType.ATTACKER,
       power: 40,
-      effectDescription: 'Explosive reaction of hydrogen and oxygen.',
+      effectDescription: 'ドカン！と爆発攻撃',
     },
-    explanation: 'Hydrogen burns explosively in oxygen: 2H2 + O2 -> 2H2O.'
+    explanation: '水素と酸素に「点火」！(2H₂ + O₂)'
   },
-  // Na + H2O -> NaOH (Strong Base) + H2 (Ignites if spark, but here we simplify)
+  // Na + H2O -> NaOH (Strong Base) + H2
   {
     inputs: [ElementType.Na],
     condition: ConditionType.WATER,
     result: {
-      name: 'Sodium Hydroxide',
+      name: '水酸化ナトリウム',
       formula: 'NaOH',
       type: MoleculeType.ATTACKER,
       power: 50,
-      effectDescription: 'Strong base corrosion. Generates heat.',
+      effectDescription: 'ドロドロに溶かす攻撃',
     },
-    explanation: 'Alkali metals react violently with water: 2Na + 2H2O -> 2NaOH + H2.'
+    explanation: 'ナトリウムを「水」に入れるだけ！(Na + H₂O)'
   },
   // H + Cl -> HCl
   {
     inputs: [ElementType.H, ElementType.Cl],
-    condition: null, // Spontaneous or light, treated as standard here
+    condition: null, // Any or None
     result: {
-      name: 'Hydrochloric Acid',
+      name: '塩化水素',
       formula: 'HCl',
       type: MoleculeType.ATTACKER,
       power: 60,
-      effectDescription: 'Strong acid attack.',
+      effectDescription: '強力な酸で攻撃！',
     },
-    explanation: 'Hydrogen and chlorine react to form hydrogen chloride: H2 + Cl2 -> 2HCl.'
+    explanation: '水素と塩素を混ぜるだけ。(H + Cl)'
   },
   // Ag + Cl -> AgCl (Precipitate)
   {
     inputs: [ElementType.Ag, ElementType.Cl],
     condition: null,
     result: {
-      name: 'Silver Chloride',
+      name: '塩化銀',
       formula: 'AgCl',
       type: MoleculeType.DEFENDER,
       power: 50, // Shield amount
       specialEffect: 'WALL',
-      effectDescription: 'White precipitate wall. Blocks attacks.',
+      effectDescription: '白い壁で守る！',
     },
-    explanation: 'Silver ions react with chloride ions to form an insoluble white precipitate: Ag+ + Cl- -> AgCl.'
-  },
-  // Haber Bosch: N + 3H (Fe Catalyst) -> NH3
-  {
-    inputs: [ElementType.N, ElementType.H, ElementType.H, ElementType.H],
-    condition: ConditionType.CATALYST_FE,
-    result: {
-      name: 'Ammonia',
-      formula: 'NH3',
-      type: MoleculeType.EFFECT,
-      power: 10,
-      specialEffect: 'STUN',
-      effectDescription: 'Pungent odor stuns the opponent for 1 turn.',
-    },
-    explanation: 'Haber-Bosch Process: N2 + 3H2 -> 2NH3 with Iron catalyst.'
+    explanation: '銀と塩素で白い壁ができる。(Ag + Cl)'
   },
   // Ostwald Step 3 simplified: NO2 + H2O -> HNO3
   // Simplified for game: N + O + O + H + Water -> HNO3
   {
-    inputs: [ElementType.H, ElementType.N, ElementType.O, ElementType.O, ElementType.O],
+    inputs: [ElementType.H, ElementType.N, ElementType.O, ElementType.O],
     condition: ConditionType.WATER,
     result: {
-      name: 'Nitric Acid',
-      formula: 'HNO3',
+      name: '硝酸',
+      formula: 'HNO₃',
       type: MoleculeType.ATTACKER,
-      power: 90,
+      power: 80,
       specialEffect: 'PIERCING',
-      effectDescription: 'Powerful oxidizing acid. Pierces standard shields.',
+      effectDescription: '全てを溶かす最強の酸！',
     },
-    explanation: 'Ostwald Process final stage. Industrial production of nitric acid.'
+    explanation: 'たくさんの材料を水に溶かす難しい実験！'
   },
   // Fe + S -> FeS (Heated)
   {
     inputs: [ElementType.Fe, ElementType.S],
     condition: ConditionType.HEAT,
     result: {
-      name: 'Iron(II) Sulfide',
+      name: '硫化鉄',
       formula: 'FeS',
       type: MoleculeType.DEFENDER,
       power: 40,
       specialEffect: 'WALL',
-      effectDescription: 'Black solid wall.',
+      effectDescription: '黒い壁で防御！',
     },
-    explanation: 'Iron and sulfur react upon heating: Fe + S -> FeS.'
+    explanation: '鉄と硫黄を「加熱」して合体！(Fe + S)'
   }
 ];
